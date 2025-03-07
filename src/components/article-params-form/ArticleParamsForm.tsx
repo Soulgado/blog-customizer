@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 
 // import components
@@ -66,15 +66,31 @@ export const ArticleParamsForm = ({
 		});
 	}
 
+	useEffect(() => {
+		const handleCloseEvent = () => {
+			setMenuIsOpen(false);
+		};
+		document.addEventListener('click', handleCloseEvent);
+
+		return () => {
+			document.removeEventListener('click', handleCloseEvent);
+		};
+	}, [menuIsOpen]);
+
 	return (
 		<>
 			<ArrowButton
 				isOpen={menuIsOpen}
-				onClick={() => {
+				onClick={(event) => {
+					event.stopPropagation(); /* so sidebar isn't closed on click on it */
 					setMenuIsOpen(!menuIsOpen);
 				}}
 			/>
 			<aside
+				onClick={
+					(event) =>
+						event.stopPropagation() /* so sidebar isn't closed on click on it */
+				}
 				className={clsx(styles.container, menuIsOpen && styles.container_open)}>
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text as={'h2'} size={31} weight={800} uppercase={true}>
