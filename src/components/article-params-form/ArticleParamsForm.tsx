@@ -18,22 +18,52 @@ import {
 	fontFamilyOptions,
 	fontSizeOptions,
 	contentWidthArr,
+	OptionType,
+	defaultArticleState,
 } from 'src/constants/articleProps';
 
-export const ArticleParamsForm = () => {
+type ArticleParamsFormProps = {
+	setStyleOptions: React.Dispatch<
+		React.SetStateAction<{
+			fontFamilyOption: OptionType;
+			fontColor: OptionType;
+			backgroundColor: OptionType;
+			contentWidth: OptionType;
+			fontSizeOption: OptionType;
+		}>
+	>;
+};
+
+export const ArticleParamsForm = ({
+	setStyleOptions,
+}: ArticleParamsFormProps) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
-	const [fontOption, setFontOption] = useState(fontFamilyOptions[0]);
+	const [fontFamilyOption, setFontFamilyOption] = useState(
+		fontFamilyOptions[0]
+	);
 	const [fontSizeOption, setFontSizeOption] = useState(fontSizeOptions[0]);
-	const [fontColorOption, setFontColorOption] = useState(fontColors[0]);
+	const [fontColor, setFontColor] = useState(fontColors[0]);
 	const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0]);
 	const [contentWidth, setContentWidth] = useState(contentWidthArr[0]);
 
 	function handleReset() {
-		setFontOption(fontFamilyOptions[0]);
+		setFontFamilyOption(fontFamilyOptions[0]);
 		setFontSizeOption(fontSizeOptions[0]);
-		setFontColorOption(fontColors[0]);
+		setFontColor(fontColors[0]);
 		setBackgroundColor(backgroundColors[0]);
 		setContentWidth(contentWidthArr[0]);
+		setStyleOptions(defaultArticleState);
+	}
+
+	function handleSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		setStyleOptions({
+			fontFamilyOption,
+			fontSizeOption,
+			fontColor,
+			contentWidth,
+			backgroundColor,
+		});
 	}
 
 	return (
@@ -46,15 +76,15 @@ export const ArticleParamsForm = () => {
 			/>
 			<aside
 				className={clsx(styles.container, menuIsOpen && styles.container_open)}>
-				<form className={styles.form}>
+				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text as={'h2'} size={31} weight={800} uppercase={true}>
 						Задайте параметры
 					</Text>
 					<Select
 						title={'Шрифт'}
 						options={fontFamilyOptions}
-						selected={fontOption}
-						onChange={setFontOption}></Select>
+						selected={fontFamilyOption}
+						onChange={setFontFamilyOption}></Select>
 					<RadioGroup
 						title={'Размер шрифта'}
 						options={fontSizeOptions}
@@ -64,8 +94,8 @@ export const ArticleParamsForm = () => {
 					<Select
 						title={'Цвет шрифта'}
 						options={fontColors}
-						selected={fontColorOption}
-						onChange={setFontColorOption}></Select>
+						selected={fontColor}
+						onChange={setFontColor}></Select>
 					<Separator></Separator>
 					<Select
 						title={'Цвет фона'}
