@@ -98,7 +98,9 @@ export const ArticleParamsForm = ({
 					(event) =>
 						event.stopPropagation() /* so sidebar isn't closed on click on it */
 				}
-				className={clsx(styles.container, menuIsOpen && styles.container_open)}>
+				className={clsx(styles.container, {
+					[styles.container_open]: menuIsOpen,
+				})}>
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text as={'h2'} size={31} weight={800} uppercase={true}>
 						Задайте параметры
