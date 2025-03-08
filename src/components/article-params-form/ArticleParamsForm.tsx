@@ -39,19 +39,25 @@ export const ArticleParamsForm = ({
 }: ArticleParamsFormProps) => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false);
 	const [fontFamilyOption, setFontFamilyOption] = useState(
-		fontFamilyOptions[0]
+		defaultArticleState.fontFamilyOption
 	);
-	const [fontSizeOption, setFontSizeOption] = useState(fontSizeOptions[0]);
-	const [fontColor, setFontColor] = useState(fontColors[0]);
-	const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0]);
-	const [contentWidth, setContentWidth] = useState(contentWidthArr[0]);
+	const [fontSizeOption, setFontSizeOption] = useState(
+		defaultArticleState.fontSizeOption
+	);
+	const [fontColor, setFontColor] = useState(defaultArticleState.fontColor);
+	const [backgroundColor, setBackgroundColor] = useState(
+		defaultArticleState.backgroundColor
+	);
+	const [contentWidth, setContentWidth] = useState(
+		defaultArticleState.contentWidth
+	);
 
 	function handleReset() {
-		setFontFamilyOption(fontFamilyOptions[0]);
-		setFontSizeOption(fontSizeOptions[0]);
-		setFontColor(fontColors[0]);
-		setBackgroundColor(backgroundColors[0]);
-		setContentWidth(contentWidthArr[0]);
+		setFontFamilyOption(defaultArticleState.fontFamilyOption);
+		setFontSizeOption(defaultArticleState.fontSizeOption);
+		setFontColor(defaultArticleState.fontColor);
+		setBackgroundColor(defaultArticleState.backgroundColor);
+		setContentWidth(defaultArticleState.contentWidth);
 		setStyleOptions(defaultArticleState);
 	}
 
@@ -67,6 +73,7 @@ export const ArticleParamsForm = ({
 	}
 
 	useEffect(() => {
+		if (!menuIsOpen) return;
 		const handleCloseEvent = () => {
 			setMenuIsOpen(false);
 		};
